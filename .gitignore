@@ -69,3 +69,7 @@ Design Merge/.vs/Design Merge/v16/Browse.VC.db-shm
 Design Merge/.vs/Design Merge/v16/Browse.VC.db-wal
 Design Merge/.vs/Design Merge/v16/Browse.VC.db
 /AssetBundles
+Library
+obj
+Logs
+.idea
