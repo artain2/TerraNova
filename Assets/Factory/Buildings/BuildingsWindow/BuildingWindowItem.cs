@@ -4,43 +4,44 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class BuildingWindowItem : MonoBehaviour
+namespace TerraNova.Factory
 {
-
-    [SerializeField] Image _icon;
-    [SerializeField] Text _name;
-    [SerializeField] Button _btn;
-
-    Action<BuildingWindowItem> _clickCallback;
-
-    public BuildingConfig ConfigHandle { get; private set; }
-
-    private void Start()
+    public class BuildingWindowItem : MonoBehaviour
     {
-        _btn.onClick.AddListener(() => _clickCallback(this));
-    }
 
-    public BuildingWindowItem SetClickCallback(Action<BuildingWindowItem> clickCallback)
-    {
-        _clickCallback = clickCallback;
-        return this;
-    }
+        [SerializeField] Image _icon;
+        [SerializeField] Text _name;
+        [SerializeField] Button _btn;
 
-    public BuildingWindowItem SetName(string value)
-    {
-        _name.text = value;
-        return this;
-    }
-    public BuildingWindowItem SetIcon(Sprite value)
-    {
-        _icon.sprite = value;
-        return this;
-    }
-    public BuildingWindowItem SetHandle(BuildingConfig config)
-    {
-        ConfigHandle = config;
-        return this;
-    }
+        Action<BuildingWindowItem> _clickCallback;
 
+        public BuildingConfig ConfigHandle { get; private set; }
 
+        private void Start()
+        {
+            _btn.onClick.AddListener(() => _clickCallback(this));
+        }
+
+        public BuildingWindowItem SetClickCallback(Action<BuildingWindowItem> clickCallback)
+        {
+            _clickCallback = clickCallback;
+            return this;
+        }
+
+        public BuildingWindowItem SetName(string value)
+        {
+            _name.text = value;
+            return this;
+        }
+        public BuildingWindowItem SetIcon(Sprite value)
+        {
+            _icon.sprite = value;
+            return this;
+        }
+        public BuildingWindowItem SetHandle(BuildingConfig config)
+        {
+            ConfigHandle = config;
+            return this;
+        }
+    }
 }

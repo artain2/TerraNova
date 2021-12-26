@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+
+namespace TerraNova.UI
 {
-    [SerializeField] Canvas _canvas;
-    [SerializeField] Transform _windowsRoot;
-    [SerializeField] UIInstance _uiInstancePrefab;
-
-    public UIInstance UI { get; private set; }
-
-    public void Init()
+    public class UIController : MonoBehaviour
     {
-        UI = Instantiate(_uiInstancePrefab, _canvas.transform);
-    }
+        [SerializeField] Canvas _canvas;
+        [SerializeField] Transform _windowsRoot;
+        [SerializeField] UIInstance _uiInstancePrefab;
 
-    public T CreateWindow<T>(T window) where T : MonoBehaviour
-    {
-        var inst = Instantiate(window, _windowsRoot);
-        return inst;
+        public UIInstance UI { get; private set; }
+
+        public void Init()
+        {
+            UI = Instantiate(_uiInstancePrefab, _canvas.transform);
+        }
+
+        public T CreateWindow<T>(T window) where T : MonoBehaviour
+        {
+            var inst = Instantiate(window, _windowsRoot);
+            return inst;
+        }
     }
 }

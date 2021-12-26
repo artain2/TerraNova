@@ -1,82 +1,87 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TerraNova.Map;
+using TerraNova.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingProcessMaster : MonoBehaviour
+namespace TerraNova.Factory
 {
-    [Header("Inject")]
-    [SerializeField] UIController _uiController;
-    [SerializeField] ObstackleController _obstackles;
-    [SerializeField] BuildingsInfoController _buildingInfos;
-    [SerializeField] BuildingPresetController _buildingPresetController;
-    [SerializeField] BuildingsFabric _buildingFabric;
-    [SerializeField] TileController _tileController;
-    [Header("Own")]
-    [SerializeField] BuildingsWindow _buildingWindowPrefab;
-
-    private BuildingsWindow _buildingWindowInstance;
-
-    public void Init()
+    public class BuildingProcessMaster : MonoBehaviour
     {
-        _uiController.UI._commandButtons._buildButton.onClick.AddListener(AtButtonBuildClick);
-        _uiController.UI._buildingAcceptPanel._okButton.onClick.AddListener(AtAcceptButtonClick);
-        _uiController.UI._buildingAcceptPanel._noButton.onClick.AddListener(AtDenieButtonClick);
-        _buildingPresetController.OnObstackleStatusChange += AtObstackleStatusChange;
-    }
+        [Header("Inject")]
+        [SerializeField] UIController _uiController;
+        [SerializeField] ObstackleController _obstackles;
+        [SerializeField] BuildingsInfoController _buildingInfos;
+        [SerializeField] BuildingPresetController _buildingPresetController;
+        [SerializeField] BuildingsFabric _buildingFabric;
+        [SerializeField] TileController _tileController;
+        [Header("Own")]
+        [SerializeField] BuildingsWindow _buildingWindowPrefab;
 
-    private void AtObstackleStatusChange(bool isClear)
-    {
-        _uiController.UI._buildingAcceptPanel._okButton.interactable = isClear;
-    }
+        private BuildingsWindow _buildingWindowInstance;
 
-    private void AtButtonBuildClick()
-    {
-        _uiController.UI._commandButtons._buildButton.interactable = false;
-        _buildingWindowInstance = _uiController.CreateWindow(_buildingWindowPrefab);
-        _buildingWindowInstance.OnBuildingSelected += AtBuildingSelected;
-        _buildingWindowInstance.OnCloseClick += CloseWindow;
-        _buildingWindowInstance.AddBuildings(_buildingInfos.Configs);
-    }
+        public void Init()
+        {
+            _uiController.UI._commandButtons._buildButton.onClick.AddListener(AtButtonBuildClick);
+            _uiController.UI._buildingAcceptPanel._okButton.onClick.AddListener(AtAcceptButtonClick);
+            _uiController.UI._buildingAcceptPanel._noButton.onClick.AddListener(AtDenieButtonClick);
+            _buildingPresetController.OnObstackleStatusChange += AtObstackleStatusChange;
+        }
 
-    private void AtBuildingSelected(BuildingConfig buildingConfig)
-    {
-        _buildingPresetController.StartBuildings(buildingConfig);
-        var startCoordinate = _tileController.CoordinateByPosition(Camera.main.transform.position);
-        _buildingPresetController.MoveInstanceToCoordinate(startCoordinate);
-        SetUIBuildState(true);
+        private void AtObstackleStatusChange(bool isClear)
+        {
+            _uiController.UI._buildingAcceptPanel._okButton.interactable = isClear;
+        }
 
-        _buildingWindowInstance.gameObject.SetActive(false);
-    }
+        private void AtButtonBuildClick()
+        {
+            _uiController.UI._commandButtons._buildButton.interactable = false;
+            _buildingWindowInstance = _uiController.CreateWindow(_buildingWindowPrefab);
+            _buildingWindowInstance.OnBuildingSelected += AtBuildingSelected;
+            _buildingWindowInstance.OnCloseClick += CloseWindow;
+            _buildingWindowInstance.AddBuildings(_buildingInfos.Configs);
+        }
 
-    private void CloseWindow()
-    {
-        _uiController.UI._commandButtons._buildButton.interactable = true;
-        _buildingWindowInstance.Close();
-    }
+        private void AtBuildingSelected(BuildingConfig buildingConfig)
+        {
+            _buildingPresetController.StartBuildings(buildingConfig);
+            var startCoordinate = _tileController.CoordinateByPosition(Camera.main.transform.position);
+            _buildingPresetController.MoveInstanceToCoordinate(startCoordinate);
+            SetUIBuildState(true);
 
-    private void AtAcceptButtonClick()
-    {
-        BuildingConfig config = _buildingPresetController.CurrentConfig;
-        Vector2Int coord = _buildingPresetController.CurrentCoordinate;
+            _buildingWindowInstance.gameObject.SetActive(false);
+        }
 
-        _buildingFabric.CreateBuilding(config, coord);
-        _obstackles.Registrate(coord, config._size, config.id);
-        CloseWindow();
-        SetUIBuildState(false);
-        _buildingPresetController.StopBuilding();
-    }
+        private void CloseWindow()
+        {
+            _uiController.UI._commandButtons._buildButton.interactable = true;
+            _buildingWindowInstance.Close();
+        }
 
-    private void AtDenieButtonClick()
-    {
-        SetUIBuildState(false);
-        _buildingPresetController.StopBuilding();
-        _buildingWindowInstance.gameObject.SetActive(true);
-    }
+        private void AtAcceptButtonClick()
+        {
+            BuildingConfig config = _buildingPresetController.CurrentConfig;
+            Vector2Int coord = _buildingPresetController.CurrentCoordinate;
 
-    private void SetUIBuildState(bool buildState)
-    {
-        _uiController.UI._commandButtons.gameObject.SetActive(!buildState);
-        _uiController.UI._buildingAcceptPanel.gameObject.SetActive(buildState);
+            _buildingFabric.CreateBuilding(config, coord);
+            _obstackles.Registrate(coord, config._size, config.id);
+            CloseWindow();
+            SetUIBuildState(false);
+            _buildingPresetController.StopBuilding();
+        }
+
+        private void AtDenieButtonClick()
+        {
+            SetUIBuildState(false);
+            _buildingPresetController.StopBuilding();
+            _buildingWindowInstance.gameObject.SetActive(true);
+        }
+
+        private void SetUIBuildState(bool buildState)
+        {
+            _uiController.UI._commandButtons.gameObject.SetActive(!buildState);
+            _uiController.UI._buildingAcceptPanel.gameObject.SetActive(buildState);
+        }
     }
 }

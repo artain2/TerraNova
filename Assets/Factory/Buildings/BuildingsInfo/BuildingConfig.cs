@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BuildingConfig", menuName = "Config/Building/BuildingConfig")]
-public class BuildingConfig : ScriptableObject
+namespace TerraNova.Factory
 {
-    public int id;
-    public Vector2Int _size;
-    public Sprite _buildingImage;
-    public string _buildingName;
+
+    [CreateAssetMenu(fileName = "BuildingConfig", menuName = "Config/Building/BuildingConfig")]
+    public class BuildingConfig : ScriptableObject
+    {
+        public int id;
+        public Vector2Int _size;
+        public Sprite _buildingImage;
+        public string _buildingName;
+    }
 }

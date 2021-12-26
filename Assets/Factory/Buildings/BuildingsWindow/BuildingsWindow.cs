@@ -5,54 +5,57 @@ using UnityEngine.UI;
 using System;
 
 
-public class BuildingsWindow : MonoBehaviour
+namespace TerraNova.Factory
 {
-    public event Action OnCloseClick;
-    public event Action<BuildingConfig> OnBuildingSelected;
-
-    [SerializeField] Button _closeButton;
-    [SerializeField] BuildingWindowItem _itemPrefab;
-    [SerializeField] Transform _root;
-
-
-    List<BuildingWindowItem> itemInstances = new List<BuildingWindowItem>();
-
-    private void Start()
+    public class BuildingsWindow : MonoBehaviour
     {
-        _closeButton.onClick.AddListener(() => OnCloseClick?.Invoke());
-    }
+        public event Action OnCloseClick;
+        public event Action<BuildingConfig> OnBuildingSelected;
 
-    public BuildingsWindow AddBuildings(IEnumerable<BuildingConfig> buildingConfigs)
-    {
-        foreach (var config in buildingConfigs)
+        [SerializeField] Button _closeButton;
+        [SerializeField] BuildingWindowItem _itemPrefab;
+        [SerializeField] Transform _root;
+
+
+        List<BuildingWindowItem> itemInstances = new List<BuildingWindowItem>();
+
+        private void Start()
         {
-            var inst = Instantiate(_itemPrefab, _root);
-            inst.SetHandle(config).SetIcon(config._buildingImage).SetName(config._buildingName);
-            inst.SetClickCallback(AtItemClick);
-            itemInstances.Add(inst);
+            _closeButton.onClick.AddListener(() => OnCloseClick?.Invoke());
         }
 
-        return this;
-    }
-    public BuildingsWindow Close()
-    {
-        OnBuildingSelected = null;
-        OnCloseClick = null;
-        Destroy(gameObject);
-        return this;
-    }
-
-    public void Clear()
-    {
-        for (int i = 0; i < itemInstances.Count; i++)
+        public BuildingsWindow AddBuildings(IEnumerable<BuildingConfig> buildingConfigs)
         {
-            Destroy(itemInstances[i]);
-        }
-        itemInstances.Clear();
-    }
+            foreach (var config in buildingConfigs)
+            {
+                var inst = Instantiate(_itemPrefab, _root);
+                inst.SetHandle(config).SetIcon(config._buildingImage).SetName(config._buildingName);
+                inst.SetClickCallback(AtItemClick);
+                itemInstances.Add(inst);
+            }
 
-    private void AtItemClick(BuildingWindowItem sender)
-    {
-        OnBuildingSelected?.Invoke(sender.ConfigHandle);
+            return this;
+        }
+        public BuildingsWindow Close()
+        {
+            OnBuildingSelected = null;
+            OnCloseClick = null;
+            Destroy(gameObject);
+            return this;
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < itemInstances.Count; i++)
+            {
+                Destroy(itemInstances[i]);
+            }
+            itemInstances.Clear();
+        }
+
+        private void AtItemClick(BuildingWindowItem sender)
+        {
+            OnBuildingSelected?.Invoke(sender.ConfigHandle);
+        }
     }
 }

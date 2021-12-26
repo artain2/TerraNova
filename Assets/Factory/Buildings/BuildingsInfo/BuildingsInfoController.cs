@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingsInfoController : MonoBehaviour
+namespace TerraNova.Factory
 {
-    [SerializeField] BuildingConfig[] configs;
+    public class BuildingsInfoController : MonoBehaviour
+    {
+        [SerializeField] BuildingConfig[] configs;
 
-    public BuildingConfig[] Configs => configs;
+        public BuildingConfig[] Configs => configs;
+    }
 }

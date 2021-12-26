@@ -67,6 +67,9 @@
     <Compile Include="Assets\Factory\Buildings\BuildingsInfo\BuildingsInfoController.cs" />
     <Compile Include="Assets\Factory\Buildings\BuildingsWindow\BuildingWindowItem.cs" />
     <Compile Include="Assets\Factory\Buildings\BuildingsWindow\BuildingsWindow.cs" />
+    <Compile Include="Assets\Factory\GameItems\GameItemConfig.cs" />
+    <Compile Include="Assets\Factory\Recipes\GameItemAmountNode.cs" />
+    <Compile Include="Assets\Factory\Recipes\RecipeConfig.cs" />
     <Compile Include="Assets\Map\ObstackleController.cs" />
     <Compile Include="Assets\Map\TileController.cs" />
     <Compile Include="Assets\Project\GameInit\Initer.cs" />

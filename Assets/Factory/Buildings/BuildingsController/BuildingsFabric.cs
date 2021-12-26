@@ -1,20 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TerraNova.Map;
 using UnityEngine;
 
-public class BuildingsFabric : MonoBehaviour
+namespace TerraNova.Factory
 {
-    [Header("Inject")]
-    [SerializeField] TileController _tileController;
-    [Header("Own")]
-    [SerializeField] Building _buildingPrefab;
-    [SerializeField] Transform _root;
-
-    public void CreateBuilding(BuildingConfig config, Vector2Int coordinate)
+    public class BuildingsFabric : MonoBehaviour
     {
-        var inst = Instantiate(_buildingPrefab, _root);
-        var pos = _tileController.PositionByCoordinate(coordinate);
-        inst.transform.position = pos;
-        inst.SetValues(config, coordinate);
+        [Header("Inject")]
+        [SerializeField] TileController _tileController;
+        [Header("Own")]
+        [SerializeField] Building _buildingPrefab;
+        [SerializeField] Transform _root;
+
+        public void CreateBuilding(BuildingConfig config, Vector2Int coordinate)
+        {
+            var inst = Instantiate(_buildingPrefab, _root);
+            var pos = _tileController.PositionByCoordinate(coordinate);
+            inst.transform.position = pos;
+            inst.SetValues(config, coordinate);
+        }
     }
 }

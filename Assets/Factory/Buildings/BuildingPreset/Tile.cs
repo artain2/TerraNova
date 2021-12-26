@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+namespace TerraNova.Factory
 {
-    [SerializeField] SpriteRenderer _ren;
-    [SerializeField] float _alpha = .6f;
-
-    public void SetColor(Color col)
+    public class Tile : MonoBehaviour
     {
-        col.a = _alpha;
-        _ren.color = col;
+        [SerializeField] SpriteRenderer _ren;
+        [SerializeField] float _alpha = .6f;
+
+        public void SetColor(Color col)
+        {
+            col.a = _alpha;
+            _ren.color = col;
+        }
     }
 }

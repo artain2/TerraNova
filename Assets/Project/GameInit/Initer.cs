@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TerraNova.Factory;
+using TerraNova.UI;
 
-public class Initer : MonoBehaviour
+namespace TerraNova
 {
-    [SerializeField] UIController uiController;
-    [SerializeField] BuildingProcessMaster buildProcessMaster;
 
-    private void Start()
+    public class Initer : MonoBehaviour
     {
-        uiController.Init();
-        buildProcessMaster.Init();
+        [SerializeField] UIController uiController;
+        [SerializeField] BuildingProcessMaster buildProcessMaster;
+
+        private void Start()
+        {
+            uiController.Init();
+            buildProcessMaster.Init();
+        }
     }
 }

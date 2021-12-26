@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIInstance : MonoBehaviour
-{
 
-    public CommandButtonsPanel _commandButtons;
-    public BuildAcceptPanel _buildingAcceptPanel;
+namespace TerraNova.UI
+{
+    public class UIInstance : MonoBehaviour
+    {
+
+        public CommandButtonsPanel _commandButtons;
+        public TerraNova.UI.BuildAcceptPanel _buildingAcceptPanel;
+    }
 }
